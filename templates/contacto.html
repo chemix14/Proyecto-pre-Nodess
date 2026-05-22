@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .page-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 70px 0 50px;
+        margin-top: -70px;
+        clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ─── Contact info card ─── */
+    .contact-info-card {
+        border: none;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+        overflow: hidden;
+        height: 100%;
+    }
+    .info-item {
+        display: flex; align-items: center; gap: 16px;
+        padding: 18px 0;
+        border-bottom: 1px solid #f5f5f5;
+        transition: transform 0.25s, background 0.25s;
+        border-radius: 10px;
+        padding-left: 6px;
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-item:hover { transform: translateX(6px); }
+    .info-icon {
+        width: 46px; height: 46px;
+        border-radius: 12px;
+        background: var(--primary-color);
+        color: white;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        transition: transform 0.3s, border-radius 0.3s;
+    }
+    .info-item:hover .info-icon { transform: rotate(10deg) scale(1.08); border-radius: 50%; }
+
+    /* ─── Social media card ─── */
+    .social-card {
+        border: none;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,43,91,0.25);
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .social-card::before {
+        content: '';
+        position: absolute;
+        width: 250px; height: 250px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.05);
+        bottom: -80px; right: -60px;
+    }
+
+    /* Social icon buttons */
+    .social-btn {
+        display: flex; align-items: center; gap: 14px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.08);
+        text-decoration: none;
+        color: white;
+        transition: background 0.3s, transform 0.3s;
+        margin-bottom: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .social-btn:hover {
+        background: rgba(255,255,255,0.18);
+        transform: translateX(6px);
+        color: white;
+    }
+    .social-btn .soc-icon {
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        transition: transform 0.35s;
+    }
+    .social-btn:hover .soc-icon { transform: rotate(-10deg) scale(1.15); }
+    .social-btn .soc-label { font-weight: 600; font-size: 0.9rem; }
+    .social-btn .soc-sub { font-size: 0.75rem; opacity: 0.65; }
+
+    /* ─── Wave animation on social card top ─── */
+    @keyframes waveMove {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .wave-top {
+        position: relative; height: 60px; overflow: hidden;
+        background: rgba(255,255,255,0.04);
+    }
+    .wave-top svg {
+        position: absolute;
+        width: 200%; height: 100%;
+        animation: waveMove 4s linear infinite;
+    }
+
+    /* ─── Send button ─── */
+    @keyframes rippleOut {
+        0%   { box-shadow: 0 0 0 0 rgba(181,148,16,0.6); }
+        100% { box-shadow: 0 0 0 20px rgba(181,148,16,0); }
+    }
+    .btn-contact { animation: rippleOut 2s infinite; }
+</style>
+
+<div class="page-hero">
+    <div class="container pt-5">
+        <p class="text-uppercase small mb-2" style="color: var(--accent-color); letter-spacing:3px;">
+            <i class="fas fa-envelope-open-text me-2"></i>Comunícate
+        </p>
+        <h1 class="display-5 fw-bold brand-font text-white" data-aos="fade-right">Contacto y Redes Sociales</h1>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row g-4">
+
+        <!-- Contact info -->
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="contact-info-card p-5">
+                <h4 class="fw-bold mb-4 brand-font" style="color: var(--primary-color);">
+                    <i class="fas fa-address-card me-2" style="color: var(--accent-color);"></i>Información Oficial
+                </h4>
+
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <span class="text-muted small d-block">Correo institucional</span>
+                        {% if contacto %}
+                        <strong style="color: var(--primary-color);">{{ contacto.correo }}</strong>
+                        {% else %}
+                        <strong style="color: var(--primary-color);">deagro@teziutlan.tecnm.mx</strong>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if contacto and contacto.telefono and contacto.telefono != 'N/A' %}
+                <div class="info-item">
+                    <div class="info-icon" style="background: #28a745;"><i class="fas fa-phone"></i></div>
+                    <div>
+                        <span class="text-muted small d-block">Teléfono</span>
+                        <strong style="color: var(--primary-color);">{{ contacto.telefono }}</strong>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="info-item">
+                    <div class="info-icon" style="background: var(--accent-color);"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <span class="text-muted small d-block">Ubicación</span>
+                        <strong style="color: var(--primary-color);">Teziutlán, Puebla, México</strong>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon" style="background: #6c757d;"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <span class="text-muted small d-block">Horario de atención</span>
+                        <strong style="color: var(--primary-color);">Lun–Vie, 9:00 – 18:00 hrs</strong>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-3">
+                    <a href="mailto:deagro@teziutlan.tecnm.mx"
+                       class="btn btn-primary rounded-pill px-5 py-2 w-100 fw-bold btn-contact ripple">
+                        <i class="fas fa-paper-plane me-2"></i>Enviar un correo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social media -->
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="social-card p-0">
+                <!-- Animated wave top -->
+                <div class="wave-top">
+                    <svg viewBox="0 0 800 60" preserveAspectRatio="none">
+                        <path d="M0,30 C200,60 400,0 600,30 C700,45 750,15 800,30 L800,60 L0,60 Z"
+                              fill="rgba(255,255,255,0.08)"/>
+                    </svg>
+                </div>
+
+                <div class="p-5 pt-3 position-relative" style="z-index:1;">
+                    <h4 class="fw-bold mb-2 text-white brand-font">
+                        <i class="fas fa-satellite-dish me-2" style="color: var(--accent-color);"></i>Síguenos
+                    </h4>
+                    <p class="mb-4" style="color: rgba(255,255,255,0.75); font-size:0.95rem;">
+                        Mantente al tanto de nuestros avances, convocatorias y eventos de divulgación.
+                    </p>
+
+                    <a href="#" class="social-btn">
+                        <div class="soc-icon" style="background: #1877f2;"><i class="fab fa-facebook-f"></i></div>
+                        <div>
+                            <div class="soc-label">Facebook</div>
+                            <div class="soc-sub">Pre-NODESS Teziutlán</div>
+                        </div>
+                        <i class="fas fa-external-link-alt ms-auto opacity-50"></i>
+                    </a>
+
+                    <a href="#" class="social-btn">
+                        <div class="soc-icon" style="background: #1da1f2;"><i class="fab fa-twitter"></i></div>
+                        <div>
+                            <div class="soc-label">Twitter / X</div>
+                            <div class="soc-sub">@PreNODESS</div>
+                        </div>
+                        <i class="fas fa-external-link-alt ms-auto opacity-50"></i>
+                    </a>
+
+                    <a href="#" class="social-btn">
+                        <div class="soc-icon" style="background: #ff0000;"><i class="fab fa-youtube"></i></div>
+                        <div>
+                            <div class="soc-label">YouTube</div>
+                            <div class="soc-sub">Canal Pre-NODESS</div>
+                        </div>
+                        <i class="fas fa-external-link-alt ms-auto opacity-50"></i>
+                    </a>
+
+                    <a href="#" class="social-btn">
+                        <div class="soc-icon" style="background: #0077b5;"><i class="fab fa-linkedin-in"></i></div>
+                        <div>
+                            <div class="soc-label">LinkedIn</div>
+                            <div class="soc-sub">Red Académica</div>
+                        </div>
+                        <i class="fas fa-external-link-alt ms-auto opacity-50"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

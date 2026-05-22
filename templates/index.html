@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* ─── Hero ─── */
+    .hero {
+        background: linear-gradient(rgba(0, 43, 91, 0.88), rgba(0, 43, 91, 0.75)),
+            url('https://placehold.co/1920x600/002B5B/002B5B');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 160px 0 120px;
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        margin-top: -70px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 60% 50%, rgba(181, 148, 16, 0.15) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    /* Typewriter cursor */
+    .typewriter {
+        border-right: 3px solid var(--accent-color);
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    @keyframes blink-caret {
+
+        0%,
+        100% {
+            border-color: transparent
+        }
+
+        50% {
+            border-color: var(--accent-color)
+        }
+    }
+
+    /* ─── Counters ─── */
+    .stats-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        color: white;
+        padding: 60px 0;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        font-family: 'Merriweather', serif;
+        color: var(--accent-color);
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-top: 6px;
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 30px 20px;
+        transition: transform 0.3s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .stat-divider {
+        width: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: auto;
+    }
+
+    /* ─── Feature cards ─── */
+    .feature-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        margin-bottom: 16px;
+        transition: transform 0.35s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    /* ─── Wave divider ─── */
+    .wave-divider {
+        line-height: 0;
+        overflow: hidden;
+    }
+
+    .wave-divider svg {
+        display: block;
+        width: 100%;
+    }
+</style>
+
+<header class="hero text-center">
+    <div class="container position-relative" style="z-index:2;">
+        <p class="text-uppercase fw-bold mb-3"
+            style="letter-spacing:4px; color: var(--accent-color); font-size:0.85rem;" data-aos="fade-down">
+            <i class="fas fa-leaf me-2"></i>Red de Investigación Comunitaria
+        </p>
+        <h1 class="display-3 fw-bold brand-font mb-3" id="hero-title" data-aos="zoom-in"></h1>
+        <p class="lead fst-italic mt-3 mx-auto" data-aos="fade-up" data-aos-delay="200"
+            style="max-width:600px; opacity:0.9;">
+            Ciencia y tecnología al servicio de la comunidad.
+        </p>
+        <div class="d-flex gap-3 justify-content-center mt-5" data-aos="fade-up" data-aos-delay="400">
+            <a href="/proyectos" class="btn btn-warning rounded-pill px-5 py-3 fw-bold shadow ripple"
+                style="color: var(--primary-color);">
+                Ver Proyectos
+            </a>
+            <a href="/acerca-de" class="btn btn-outline-light rounded-pill px-5 py-3 fw-bold ripple">
+                Conocer más
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Wave -->
+<div class="wave-divider" style="margin-top:-2px;">
+    <svg viewBox="0 0 1200 80" preserveAspectRatio="none" height="60">
+        <path d="M0,40 C300,80 900,0 1200,40 L1200,80 L0,80 Z" fill="#f8f9fa" />
+    </svg>
+</div>
+
+<!-- Animated counters -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row g-0 align-items-center">
+            <div class="col-6 col-md-3 stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-number"><span class="counter" data-target="7">0</span>+</div>
+                <div class="stat-label">Instituciones Aliadas</div>
+            </div>
+            <div class="col-6 col-md-3 stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-number"><span class="counter" data-target="3">0</span></div>
+                <div class="stat-label">Municipios</div>
+            </div>
+            <div class="col-6 col-md-3 stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-number"><span class="counter" data-target="5">0</span>+</div>
+                <div class="stat-label">Cuerpos Académicos</div>
+            </div>
+            <div class="col-6 col-md-3 stat-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-number"><span class="counter" data-target="2026">0</span></div>
+                <div class="stat-label">Año Activo</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave bottom of stats -->
+<div class="wave-divider" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-light));">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none" height="50">
+        <path d="M0,30 C400,60 800,0 1200,30 L1200,60 L0,60 Z" fill="#f8f9fa" />
+    </svg>
+</div>
+
+<!-- Bienvenida + feature cards -->
+<div class="container my-5 py-4">
+    <h2 class="section-title text-center d-inline-block mb-2"
+        style="border-left: none; border-bottom: 3px solid var(--accent-color); padding-bottom:10px; display:block !important;"
+        data-aos="fade-down">Bienvenido al portal institucional</h2>
+    <p class="text-muted text-center mt-3 mb-5 mx-auto" style="max-width:750px; font-size:1.1rem; line-height:1.8;"
+        data-aos="fade-up" data-aos-delay="150">
+        Explora nuestro menú superior para conocer las alianzas, la red de investigación y las oportunidades para
+        estudiantes e investigadores.
+    </p>
+
+    <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card card-custom feature-card p-4 h-100 text-center border-0">
+                <div class="feature-icon mx-auto" style="background: rgba(0,43,91,0.08); color: var(--primary-color);">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h5 class="fw-bold brand-font" style="color:var(--primary-color);">Alianzas Estratégicas</h5>
+                <p class="text-muted small mt-2" style="line-height:1.7;">TecNM, Sabana, Ayuntamiento y más
+                    instituciones unidas por un mismo objetivo.</p>
+                <a href="/alianzas" class="btn btn-outline-primary btn-sm rounded-pill mt-auto px-4">Ver Alianzas</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card card-custom feature-card p-4 h-100 text-center border-0">
+                <div class="feature-icon mx-auto" style="background: rgba(181,148,16,0.1); color: var(--accent-color);">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h5 class="fw-bold brand-font" style="color:var(--primary-color);">Investigación Activa</h5>
+                <p class="text-muted small mt-2" style="line-height:1.7;">Proyectos interdisciplinarios orientados al
+                    desarrollo regional y la economía social.</p>
+                <a href="/proyectos" class="btn btn-outline-warning btn-sm rounded-pill mt-auto px-4"
+                    style="color:var(--accent-color)">Ver Proyectos</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card card-custom feature-card p-4 h-100 text-center border-0">
+                <div class="feature-icon mx-auto" style="background: rgba(40,167,69,0.08); color: #28a745;">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h5 class="fw-bold brand-font" style="color:var(--primary-color);">Red de Vinculación</h5>
+                <p class="text-muted small mt-2" style="line-height:1.7;">Divulgación, galería de eventos y
+                    transferencia tecnológica al servicio de la comunidad.</p>
+                <a href="/vinculacion" class="btn btn-outline-success btn-sm rounded-pill mt-auto px-4">Ver
+                    Vinculación</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // ── Typewriter hero ──────────────────────────────────────────────────
+    (function () {
+        const el = document.getElementById('hero-title');
+        const text = 'Impulso a la Economía Social';
+        let i = 0;
+        el.classList.add('typewriter');
+        function type() {
+            if (i <= text.length) {
+                el.textContent = text.slice(0, i++);
+                setTimeout(type, 55);
+            } else {
+                el.style.borderRight = 'none';
+            }
+        }
+        setTimeout(type, 500);
+    })();
+
+    // ── Animated counters ─────────────────────────────────────────────────
+    function animateCounter(el) {
+        const target = +el.dataset.target;
+        const duration = 1800;
+        const start = performance.now();
+        function step(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(ease * target);
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target;
+        }
+        requestAnimationFrame(step);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.counter').forEach(el => observer.observe(el));
+</script>
+{% endblock %}

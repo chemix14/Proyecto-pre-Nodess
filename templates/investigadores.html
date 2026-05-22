@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .page-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 70px 0 50px;
+        margin-top: -70px;
+        clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ─── Flip card (investigadores profile) ─── */
+    .flip-container { perspective: 1000px; height: 380px; }
+    .flip-inner {
+        position: relative; width: 100%; height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+    .flip-container:hover .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back {
+        position: absolute; inset: 0;
+        backface-visibility: hidden;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .flip-front { background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+    .flip-back {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        transform: rotateY(180deg);
+        display: flex; align-items: center; justify-content: center;
+        color: white; text-align: center; padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .flip-front img { width:100%; height:55%; object-fit:cover; border-bottom:4px solid var(--accent-color); }
+    .flip-front .body { padding: 20px; }
+
+    /* ─── Download button pulse ─── */
+    @keyframes pulse-ring {
+        0%   { box-shadow: 0 0 0 0 rgba(181,148,16,0.5); }
+        100% { box-shadow: 0 0 0 18px rgba(181,148,16,0); }
+    }
+    .btn-download { animation: pulse-ring 2s infinite; }
+
+    /* ─── Step badges ─── */
+    .step-item {
+        display: flex; align-items: flex-start; gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid #f0f0f0;
+        transition: transform 0.25s;
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-item:hover { transform: translateX(6px); }
+    .step-num {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: white;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+</style>
+
+<div class="page-hero">
+    <div class="container pt-5">
+        <p class="text-uppercase small mb-2" style="color: var(--accent-color); letter-spacing:3px;">
+            <i class="fas fa-user-graduate me-2"></i>Comunidad Académica
+        </p>
+        <h1 class="display-5 fw-bold brand-font text-white" data-aos="fade-right">Investigadores y Estudiantes</h1>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row g-5">
+
+        <!-- Flip card: Roles -->
+        <div class="col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="flip-container">
+                <div class="flip-inner">
+                    <!-- Front -->
+                    <div class="flip-front">
+                        <img src="https://placehold.co/600x220/002B5B/B59410?text=Investigadores+NODESS" alt="Investigadores">
+                        <div class="body text-center">
+                            <h5 class="card-title fw-bold brand-font mb-2" style="color: var(--primary-color);">Roles y Semblanzas</h5>
+                            <p class="card-text text-muted small mb-3" style="font-size:0.9rem;">
+                                Conoce a los líderes de nuestros Cuerpos Académicos (CAs) y grupos de investigación.
+                            </p>
+                            <span class="text-muted small fst-italic">
+                                <i class="fas fa-hand-pointer me-1"></i>Pasa el cursor para ver más
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Back -->
+                    <div class="flip-back">
+                        <div>
+                            <i class="fas fa-users mb-3" style="font-size:2.5rem; color: var(--accent-color);"></i>
+                            <h5 class="fw-bold brand-font mb-3">Nuestros Equipos</h5>
+                            <p class="text-white-50 small mb-4" style="line-height:1.7;">
+                                Cuerpos Académicos líderes en Economía Social, Agroindustria y Tecnología Regional.
+                            </p>
+                            <a href="#" class="btn btn-warning rounded-pill px-4 fw-bold" style="color: var(--primary-color);">
+                                Ver Directorio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student guide -->
+        <div class="col-md-7" data-aos="fade-left" data-aos-delay="300">
+            <div class="card card-custom border-0 shadow-sm h-100" style="border-left: 5px solid var(--primary-color) !important; border-radius:16px;">
+                <div class="card-body p-5">
+                    <h3 class="fw-bold mb-2 brand-font" style="color: var(--primary-color);">
+                        <i class="fas fa-user-graduate me-2" style="color: var(--accent-color);"></i>Atención Estudiantes
+                    </h3>
+                    <p class="text-muted mb-4" style="font-size:1.05rem; line-height:1.7;">
+                        Para integrarte a los proyectos y Cuerpos Académicos, es necesario consultar los roles y requisitos oficiales.
+                    </p>
+
+                    <!-- Step list -->
+                    <div class="mb-4">
+                        <div class="step-item">
+                            <div class="step-num">1</div>
+                            <div>
+                                <strong class="d-block" style="color:var(--primary-color);">Consulta el directorio</strong>
+                                <span class="text-muted small">Identifica el Cuerpo Académico de tu área de interés.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">2</div>
+                            <div>
+                                <strong class="d-block" style="color:var(--primary-color);">Descarga la guía de registro</strong>
+                                <span class="text-muted small">Revisa los requisitos y formatos requeridos.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">3</div>
+                            <div>
+                                <strong class="d-block" style="color:var(--primary-color);">Contacta al responsable</strong>
+                                <span class="text-muted small">Envía tu solicitud al investigador líder del proyecto.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-3" style="background: var(--bg-light);">
+                        <h6 class="fw-bold mb-3">
+                            <i class="fas fa-file-alt me-2" style="color: var(--primary-color);"></i>Guía de Registro Oficial
+                        </h6>
+                        <button class="btn btn-dark rounded-pill px-5 py-2 shadow-sm btn-download ripple">
+                            <i class="fas fa-file-pdf me-2"></i>Descargar (PDF)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

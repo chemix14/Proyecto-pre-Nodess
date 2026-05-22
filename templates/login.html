@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+    <div class="card card-custom p-5" style="width: 100%; max-width: 400px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);">
+        <div class="text-center mb-4">
+            <i class="fas fa-lock fs-1" style="color: var(--accent-color);"></i>
+            <h2 class="mt-3 brand-font fw-bold" style="color: var(--primary-color);">Acceso</h2>
+        </div>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="POST" action="/login">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Usuario</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold">Contraseña</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn w-100 text-white fw-bold ripple py-2" style="background-color: var(--primary-color);">Entrar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

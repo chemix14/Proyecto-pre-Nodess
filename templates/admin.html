@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title mb-0">Panel de Administración</h1>
+        <a href="/logout" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+    </div>
+
+    <!-- Tabs Nav -->
+    <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-bold text-dark" id="instituciones-tab" data-bs-toggle="tab" data-bs-target="#instituciones" type="button" role="tab">Instituciones</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-dark" id="municipios-tab" data-bs-toggle="tab" data-bs-target="#municipios" type="button" role="tab">Municipios</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-dark" id="proyectos-tab" data-bs-toggle="tab" data-bs-target="#proyectos" type="button" role="tab">Proyectos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-dark" id="contacto-tab" data-bs-toggle="tab" data-bs-target="#contacto" type="button" role="tab">Contacto</button>
+        </li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div class="tab-content" id="adminTabsContent">
+        
+        <!-- Instituciones Tab -->
+        <div class="tab-pane fade show active" id="instituciones" role="tabpanel">
+            <div class="card card-custom p-4 mb-4" style="background: rgba(255, 255, 255, 0.95);">
+                <h5 class="fw-bold mb-3 text-primary"><i class="fas fa-plus-circle me-2"></i>Agregar Institución</h5>
+                <form action="/admin/add/instituciones" method="POST" class="row g-3">
+                    <div class="col-md-5">
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre de la Institución" required>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="tipo" class="form-select" required>
+                            <option value="">Tipo...</option>
+                            <option value="Institución Educativa">Institución Educativa</option>
+                            <option value="Instancia de Gobierno">Instancia de Gobierno</option>
+                            <option value="OSSE">OSSE</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success w-100">Agregar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover bg-white rounded shadow-sm align-middle">
+                    <thead style="background-color: var(--primary-color); color: white;">
+                        <tr><th>ID</th><th>Nombre</th><th>Tipo</th><th class="text-center">Acción</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for inst in instituciones %}
+                        <tr>
+                            <td>{{ inst.id }}</td>
+                            <td class="fw-bold">{{ inst.nombre }}</td>
+                            <td><span class="badge bg-secondary">{{ inst.tipo }}</span></td>
+                            <td class="text-center">
+                                <form action="/admin/delete/instituciones/{{ inst.id }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Municipios Tab -->
+        <div class="tab-pane fade" id="municipios" role="tabpanel">
+            <div class="card card-custom p-4 mb-4" style="background: rgba(255, 255, 255, 0.95);">
+                <h5 class="fw-bold mb-3 text-primary"><i class="fas fa-plus-circle me-2"></i>Agregar Municipio</h5>
+                <form action="/admin/add/municipios" method="POST" class="row g-3">
+                    <div class="col-md-5">
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre del Municipio" required>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="estado" class="form-control" value="Puebla" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success w-100">Agregar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover bg-white rounded shadow-sm align-middle">
+                    <thead style="background-color: var(--primary-color); color: white;">
+                        <tr><th>ID</th><th>Nombre</th><th>Estado</th><th class="text-center">Acción</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for mun in municipios %}
+                        <tr>
+                            <td>{{ mun.id }}</td>
+                            <td class="fw-bold">{{ mun.nombre }}</td>
+                            <td>{{ mun.estado }}</td>
+                            <td class="text-center">
+                                <form action="/admin/delete/municipios/{{ mun.id }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Proyectos Tab -->
+        <div class="tab-pane fade" id="proyectos" role="tabpanel">
+            <div class="card card-custom p-4 mb-4" style="background: rgba(255, 255, 255, 0.95);">
+                <h5 class="fw-bold mb-3 text-primary"><i class="fas fa-plus-circle me-2"></i>Agregar Proyecto</h5>
+                <form action="/admin/add/proyectos" method="POST" class="row g-3">
+                    <div class="col-md-3">
+                        <input type="text" name="titulo" class="form-control" placeholder="Título" required>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="descripcion" class="form-control" placeholder="Descripción" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="municipio_trabajo" class="form-control" placeholder="Municipio" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success w-100">Agregar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover bg-white rounded shadow-sm align-middle">
+                    <thead style="background-color: var(--primary-color); color: white;">
+                        <tr><th>ID</th><th>Título</th><th>Descripción</th><th>Municipio</th><th class="text-center">Acción</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for proj in proyectos %}
+                        <tr>
+                            <td>{{ proj.id }}</td>
+                            <td class="fw-bold">{{ proj.titulo }}</td>
+                            <td class="text-muted small">{{ proj.descripcion }}</td>
+                            <td><span class="badge bg-info text-dark">{{ proj.municipio_trabajo }}</span></td>
+                            <td class="text-center">
+                                <form action="/admin/delete/proyectos/{{ proj.id }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contacto Tab -->
+        <div class="tab-pane fade" id="contacto" role="tabpanel">
+            <div class="card card-custom p-4" style="background: rgba(255, 255, 255, 0.95); max-width: 600px; margin: 0 auto;">
+                <h5 class="fw-bold mb-3 text-primary text-center"><i class="fas fa-address-book me-2"></i>Actualizar Información de Contacto</h5>
+                <form action="/admin/contacto" method="POST" class="row g-3 mt-2">
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Correo Electrónico</label>
+                        <input type="email" name="correo" class="form-control" value="{{ contacto.correo if contacto else '' }}" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" value="{{ contacto.telefono if contacto else '' }}" required>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Mantener la pestaña activa después de recargar
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab');
+        if (activeTab) {
+            const tabButton = document.getElementById(activeTab + '-tab');
+            if (tabButton) {
+                var tab = new bootstrap.Tab(tabButton);
+                tab.show();
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .page-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 70px 0 50px;
+        margin-top: -70px;
+        clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ─── Alianza card ─── */
+    .alianza-card {
+        border: none;
+        border-radius: 16px;
+        background: white;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        overflow: hidden;
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        position: relative;
+        height: 100%;
+    }
+    .alianza-card:hover {
+        transform: translateY(-10px) scale(1.01);
+        box-shadow: 0 20px 45px rgba(0,43,91,0.15);
+    }
+
+    /* Animated left border on hover */
+    .alianza-card::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 4px;
+        background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.35s ease;
+    }
+    .alianza-card:hover::before { transform: scaleY(1); }
+
+    /* ─── Icon container ─── */
+    .alianza-icon {
+        width: 56px; height: 56px;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        transition: transform 0.35s ease, border-radius 0.35s ease;
+    }
+    .alianza-card:hover .alianza-icon {
+        transform: rotate(-8deg) scale(1.12);
+        border-radius: 50%;
+    }
+
+    /* ─── Badge ─── */
+    .tipo-badge {
+        font-size: 0.7rem;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* ─── Filter buttons ─── */
+    .filter-btn {
+        border: 1.5px solid #dee2e6;
+        border-radius: 50px;
+        padding: 6px 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        background: white;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,43,91,0.25);
+    }
+
+    /* ─── Counter strip ─── */
+    .count-strip {
+        background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+        border-radius: 12px;
+        padding: 16px 24px;
+        color: var(--primary-color);
+        font-weight: 700;
+        text-align: center;
+    }
+</style>
+
+<div class="page-hero">
+    <div class="container pt-5">
+        <p class="text-uppercase small mb-2" style="color: var(--accent-color); letter-spacing:3px;">
+            <i class="fas fa-handshake me-2"></i>Red de Apoyo
+        </p>
+        <h1 class="display-5 fw-bold brand-font text-white" data-aos="fade-right">Instituciones Participantes</h1>
+        <p class="text-white-50 mt-2" data-aos="fade-up" data-aos-delay="100">
+            Entidades educativas, gubernamentales y organizaciones que conforman el Pre-NODESS.
+        </p>
+    </div>
+</div>
+
+<div class="container pb-5">
+
+    <!-- Filter buttons -->
+    <div class="d-flex flex-wrap gap-2 mb-5 justify-content-center" data-aos="fade-up">
+        <button class="filter-btn active" data-filter="all">
+            <i class="fas fa-th me-1"></i>Todas
+        </button>
+        <button class="filter-btn" data-filter="Institución Educativa">
+            <i class="fas fa-university me-1"></i>Educativas
+        </button>
+        <button class="filter-btn" data-filter="Instancia de Gobierno">
+            <i class="fas fa-landmark me-1"></i>Gobierno
+        </button>
+        <button class="filter-btn" data-filter="OSSE">
+            <i class="fas fa-users me-1"></i>OSSE
+        </button>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="row g-4" id="alianzas-grid">
+        {% for inst in instituciones %}
+        <div class="col-lg-4 col-md-6 alianza-item" data-tipo="{{ inst.tipo }}"
+             data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 + 100 }}">
+            <div class="alianza-card p-4">
+                <div class="d-flex align-items-start gap-3 mb-3">
+                    {% if inst.tipo == 'Institución Educativa' %}
+                    <div class="alianza-icon" style="background: rgba(0,43,91,0.08); color: var(--primary-color);">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    {% elif inst.tipo == 'Instancia de Gobierno' %}
+                    <div class="alianza-icon" style="background: rgba(40,167,69,0.1); color: #28a745;">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    {% else %}
+                    <div class="alianza-icon" style="background: rgba(181,148,16,0.1); color: var(--accent-color);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    {% endif %}
+                    <h5 class="fw-bold mb-0" style="color: var(--primary-color); line-height:1.35;">{{ inst.nombre }}</h5>
+                </div>
+                <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
+                    {% if inst.tipo == 'Institución Educativa' %}
+                    <span class="tipo-badge" style="background: rgba(0,43,91,0.08); color: var(--primary-color);">{{ inst.tipo }}</span>
+                    {% elif inst.tipo == 'Instancia de Gobierno' %}
+                    <span class="tipo-badge" style="background: rgba(40,167,69,0.1); color: #28a745;">{{ inst.tipo }}</span>
+                    {% else %}
+                    <span class="tipo-badge" style="background: rgba(181,148,16,0.1); color: var(--accent-color);">{{ inst.tipo }}</span>
+                    {% endif %}
+                    <i class="fas fa-arrow-right text-muted" style="font-size:0.8rem;"></i>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-4">
+            <p class="text-muted">No hay instituciones registradas aún.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Total count -->
+    {% if instituciones %}
+    <div class="row mt-5">
+        <div class="col-md-4 mx-auto" data-aos="zoom-in">
+            <div class="count-strip">
+                <i class="fas fa-building me-2"></i>
+                <span class="counter-inst" data-target="{{ instituciones | length }}">0</span>
+                instituciones aliadas al Pre-NODESS
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // ── Filter buttons ────────────────────────────────────────────────────
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filter = this.dataset.filter;
+            document.querySelectorAll('.alianza-item').forEach(item => {
+                const match = filter === 'all' || item.dataset.tipo === filter;
+                item.style.transition = 'opacity 0.35s, transform 0.35s';
+                item.style.opacity = match ? '1' : '0.15';
+                item.style.transform = match ? 'scale(1)' : 'scale(0.95)';
+                item.style.pointerEvents = match ? '' : 'none';
+            });
+        });
+    });
+
+    // ── Counter animation ─────────────────────────────────────────────────
+    const countObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = +el.dataset.target;
+                const duration = 1200;
+                const start = performance.now();
+                function step(now) {
+                    const p = Math.min((now - start) / duration, 1);
+                    el.textContent = Math.floor(p * target);
+                    if (p < 1) requestAnimationFrame(step);
+                    else el.textContent = target;
+                }
+                requestAnimationFrame(step);
+                countObs.unobserve(el);
+            }
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.counter-inst').forEach(el => countObs.observe(el));
+</script>
+{% endblock %}

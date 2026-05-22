@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* ─── Page hero banner ─── */
+    .page-hero {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 70px 0 50px;
+        margin-top: -70px;
+        clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        width: 500px; height: 500px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.04);
+        top: -200px; right: -100px;
+    }
+
+    /* ─── Timeline ─── */
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 8px; top: 0; bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--accent-color), transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 28px; }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -26px; top: 6px;
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        border: 2px solid white;
+        box-shadow: 0 0 0 3px rgba(181,148,16,0.25);
+        transition: transform 0.3s;
+    }
+    .timeline-item:hover::before { transform: scale(1.4); }
+
+    /* ─── Mission progress bars ─── */
+    .progress { border-radius: 50px; height: 10px; background: #e9ecef; overflow: visible; }
+    .progress-bar-animated-custom {
+        border-radius: 50px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        height: 100%;
+        width: 0%;
+        transition: width 1.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+    }
+    .progress-bar-animated-custom::after {
+        content: '';
+        position: absolute;
+        right: 0; top: 50%;
+        transform: translateY(-50%);
+        width: 16px; height: 16px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        box-shadow: 0 0 8px rgba(181,148,16,0.5);
+    }
+
+    /* ─── Zone badge ─── */
+    .zone-badge {
+        display: flex; align-items: center;
+        padding: 14px 18px;
+        border-radius: 12px;
+        background: white;
+        border: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        cursor: default;
+    }
+    .zone-badge:hover {
+        transform: translateX(6px);
+        box-shadow: 0 6px 20px rgba(0,43,91,0.12);
+        border-color: var(--accent-color);
+    }
+    .zone-icon {
+        width: 42px; height: 42px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        display: flex; align-items: center; justify-content: center;
+        color: white;
+        flex-shrink: 0;
+        margin-right: 14px;
+        transition: transform 0.3s;
+    }
+    .zone-badge:hover .zone-icon { transform: rotate(10deg) scale(1.05); }
+</style>
+
+<!-- Page hero -->
+<div class="page-hero">
+    <div class="container pt-5">
+        <p class="text-uppercase small mb-2" style="color: var(--accent-color); letter-spacing:3px;">
+            <i class="fas fa-info-circle me-2"></i>Nuestra Historia
+        </p>
+        <h1 class="display-5 fw-bold brand-font text-white" data-aos="fade-right">Acerca del Pre-NODESS</h1>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row g-5">
+
+        <!-- Left: Description + timeline + progress -->
+        <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-muted mb-4" style="line-height:1.9; font-size:1.1rem;">
+                Somos una iniciativa interdisciplinaria orientada a fomentar el desarrollo regional y la economía social
+                y solidaria. A través de la investigación y divulgación, articulamos el esfuerzo de instituciones
+                educativas, gobierno local y organizaciones de la sociedad.
+            </p>
+
+            <!-- Mission progress bars -->
+            <h5 class="fw-bold brand-font mb-4" style="color: var(--primary-color);" data-aos="fade-up">Áreas de enfoque</h5>
+            <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="small fw-bold text-muted">Investigación Científica</span><span class="small text-muted">85%</span>
+                </div>
+                <div class="progress"><div class="progress-bar-animated-custom" data-width="85"></div></div>
+            </div>
+            <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="small fw-bold text-muted">Vinculación Comunitaria</span><span class="small text-muted">70%</span>
+                </div>
+                <div class="progress"><div class="progress-bar-animated-custom" data-width="70"></div></div>
+            </div>
+            <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="d-flex justify-content-between mb-1">
+                    <span class="small fw-bold text-muted">Divulgación y Transferencia</span><span class="small text-muted">60%</span>
+                </div>
+                <div class="progress"><div class="progress-bar-animated-custom" data-width="60"></div></div>
+            </div>
+
+            <!-- Timeline -->
+            <h5 class="fw-bold brand-font mt-5 mb-4" style="color: var(--primary-color);" data-aos="fade-up">Hitos del Pre-NODESS</h5>
+            <div class="timeline" data-aos="fade-up" data-aos-delay="100">
+                <div class="timeline-item">
+                    <strong class="d-block" style="color: var(--primary-color);">Formación de la red</strong>
+                    <p class="text-muted small mb-0">Integración de los Cuerpos Académicos del TecNM con la red de alianzas institucionales.</p>
+                </div>
+                <div class="timeline-item">
+                    <strong class="d-block" style="color: var(--primary-color);">Primeros proyectos de campo</strong>
+                    <p class="text-muted small mb-0">Inicio de investigación aplicada en los municipios de Tenampulco, San Andrés Calpan y Teziutlán.</p>
+                </div>
+                <div class="timeline-item">
+                    <strong class="d-block" style="color: var(--primary-color);">Expansión internacional</strong>
+                    <p class="text-muted small mb-0">Incorporación de la Universidad de la Sabana (Colombia) como aliada estratégica.</p>
+                </div>
+                <div class="timeline-item">
+                    <strong class="d-block" style="color: var(--primary-color);">Portal institucional 2026</strong>
+                    <p class="text-muted small mb-0">Lanzamiento del sitio oficial Pre-NODESS para difusión de proyectos y convocatorias.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Zones card -->
+        <div class="col-md-5" data-aos="fade-left" data-aos-delay="300">
+            <div class="card card-custom border-0 shadow-sm" style="border-top: 4px solid var(--accent-color) !important; border-radius:16px;">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4 brand-font" style="color: var(--primary-color);">
+                        <i class="fas fa-map-marked-alt me-2" style="color:var(--accent-color);"></i>Zonas de Trabajo
+                    </h4>
+                    <div class="d-flex flex-column gap-3">
+                        {% for muni in municipios %}
+                        <div class="zone-badge" data-aos="fade-left" data-aos-delay="{{ loop.index * 100 + 200 }}">
+                            <div class="zone-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <strong class="d-block" style="color: var(--primary-color);">{{ muni.nombre }}</strong>
+                                <span class="text-muted small">{% if muni.estado %}{{ muni.estado }}{% else %}Puebla, México{% endif %}</span>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p class="text-muted small mb-0">No hay zonas registradas aún.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info callout -->
+            <div class="mt-4 p-4 rounded-3" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-light));" data-aos="fade-up" data-aos-delay="500">
+                <h6 class="text-white fw-bold mb-2"><i class="fas fa-lightbulb me-2" style="color:var(--accent-color);"></i>¿Qué es un NODESS?</h6>
+                <p class="text-white-50 small mb-0" style="line-height:1.7;">
+                    Un Nodo de Desarrollo de la Economía Social y Solidaria (NODESS) articula universidades, gobierno y organizaciones para impulsar el desarrollo comunitario sustentable.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // ── Animate progress bars on scroll ──────────────────────────────────
+    const barObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                bar.style.width = bar.dataset.width + '%';
+                barObserver.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('.progress-bar-animated-custom').forEach(b => barObserver.observe(b));
+</script>
+{% endblock %}
